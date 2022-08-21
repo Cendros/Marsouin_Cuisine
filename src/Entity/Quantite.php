@@ -14,18 +14,15 @@ class Quantite
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Ingredient $ingredient = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Unite $unite = null;
 
     #[ORM\Column]
     private ?int $valeur = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Recette $recette = null;
 
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
