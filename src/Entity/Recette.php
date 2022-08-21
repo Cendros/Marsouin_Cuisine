@@ -18,15 +18,11 @@ class Recette
     #[ORM\Column(length: 255)]
     private ?string $label = null;
 
-    #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Quantite::class, orphanRemoval: true)]
-    private Collection $ingredients;
-
     #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Etape::class)]
     private Collection $etapes;
 
     public function __construct()
     {
-        $this->ingredients = new ArrayCollection();
         $this->etapes = new ArrayCollection();
     }
 
@@ -43,36 +39,6 @@ class Recette
     public function setLabel(string $label): self
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Quantite>
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Quantite $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients->add($ingredient);
-            $ingredient->setRecette($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Quantite $ingredient): self
-    {
-        if ($this->ingredients->removeElement($ingredient)) {
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getRecette() === $this) {
-                $ingredient->setRecette(null);
-            }
-        }
 
         return $this;
     }

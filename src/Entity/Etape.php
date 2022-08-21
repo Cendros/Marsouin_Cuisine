@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EtapeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,14 @@ class Etape
 
     #[ORM\ManyToOne(inversedBy: 'etapes')]
     private ?Recette $recette = null;
+
+    #[ORM\OneToMany(mappedBy: 'etape', targetEntity: Quantite::class)]
+    private Collection $ingredients;
+
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +70,36 @@ class Etape
     public function setRecette(?Recette $recette): self
     {
         $this->recette = $recette;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantite>
+     */
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function addIngredient(Quantite $ingredient): self
+    {
+        if (!$this->ingredients->contains($ingredient)) {
+            $this->ingredients->add($ingredient);
+            $ingredient->setEtape($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIngredient(Quantite $ingredient): self
+    {
+        if ($this->ingredients->removeElement($ingredient)) {
+            // set the owning side to null (unless already changed)
+            if ($ingredient->getEtape() === $this) {
+                $ingredient->setEtape(null);
+            }
+        }
 
         return $this;
     }

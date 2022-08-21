@@ -28,6 +28,9 @@ class Quantite
     #[ORM\JoinColumn(nullable: false)]
     private ?Recette $recette = null;
 
+    #[ORM\ManyToOne(inversedBy: 'ingredients')]
+    private ?Etape $etape = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Quantite
     public function setRecette(?Recette $recette): self
     {
         $this->recette = $recette;
+
+        return $this;
+    }
+
+    public function getEtape(): ?Etape
+    {
+        return $this->etape;
+    }
+
+    public function setEtape(?Etape $etape): self
+    {
+        $this->etape = $etape;
 
         return $this;
     }
