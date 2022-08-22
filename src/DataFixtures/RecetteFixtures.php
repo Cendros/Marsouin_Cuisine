@@ -64,7 +64,9 @@ class RecetteFixtures extends Fixture
         $manager->persist($etape2);
 
         $recette = new Recette();
-        $recette->setLabel('Gateau de test');
+        $recette->setLabel('Bretzel');
+        $recette->setImgPath('bretzel.jpg');
+        $recette->setVideo('https://www.youtube.com/embed/BW0Z_u9o53s');
         $recette->addEtape($etape);
         $recette->addEtape($etape2);
         $manager->persist($recette);

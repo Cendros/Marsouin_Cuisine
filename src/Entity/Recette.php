@@ -21,6 +21,12 @@ class Recette
     #[ORM\OneToMany(mappedBy: 'recette', targetEntity: Etape::class)]
     private Collection $etapes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imgPath = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $video = null;
+
     public function __construct()
     {
         $this->etapes = new ArrayCollection();
@@ -69,6 +75,30 @@ class Recette
                 $etape->setRecette(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImgPath(): ?string
+    {
+        return $this->imgPath;
+    }
+
+    public function setImgPath(?string $imgPath): self
+    {
+        $this->imgPath = $imgPath;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }
