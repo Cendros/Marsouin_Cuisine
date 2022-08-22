@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Marsouin_Cuisine
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center mt-5 mb-5">Bienvenue sur Marsouin Cuisine !</h1>
+		<h3>Recettes</h3>
+		<hr>
+		<div class="row row-cols-1 row-cols-md-4 g-4">
+			{% for recette in recettes %}
+				<div class="col">
+					<div class="card card border-light bg-transparent text-center">
+						<div class="card-body">
+							<img src="{{ asset('assets/img/recettes/bretzel.jpg') }}" class="card-img-top img-thumbnail" alt="...">
+						</div>
+						<div class="card-footer">
+							<h5 class="card-title">{{ recette.label }}</h5>
+							<a href="recette/{{ recette.id }}" class="stretched-link"></a>
+						</div>
+					</div>
+				</div>
+
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
